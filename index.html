@@ -32,7 +32,7 @@
 		var setIntervalId;
 		var correct = 0;
 		var incorrect = 0;
-		var unanswered = trivia.questions.length;
+		var unanswered = 0;
 		var questionNumber = 0;
 		
 		$(".startBtn").on("click", function(){
@@ -45,6 +45,16 @@
 		function timer(){
 			time--;
 			$("#displayTime").html(time);
+			if (time === 0){
+				$(".html").html(
+				"<p>Time Remaining: " + "<span>" + time + "</span>" + " Seconds</p>" + "<p>Out of Time!</p>");
+				console.log("time out");
+				unanswered++;
+				// clearInterval(setIntervalId);
+				// $(".html").html("Out of Time!");
+				setTimeout(displayQuestion, 1000 * 5);
+				time = 15;
+			}
 			// if (time === 0){
 			// 	displayQuestion();
 			// 	time = 10;
@@ -64,32 +74,36 @@
 				if (this.value === "1"){
 					console.log("correct!");
 					correct++;
-					unanswered--;
-					// clearInterval(setIntervalId);
+					// unanswered--;
+					
 					$(".html").html(
+						"<p>Time Remaining: " + "<span>" + time + "</span>" + " Seconds</p>" +
 						"<p>Correct!</p>");
+					// clearInterval(setIntervalId);
 					setTimeout(displayQuestion, 1000 * 5);
 					time = 15;
 				}
 				else{
 					console.log("not correct");
 					incorrect++;
-					unanswered--;
+					// unanswered--;
 					// clearInterval(setIntervalId);
 					$(".html").html(
+						"<p>Time Remaining: " + "<span>" + time + "</span>" + " Seconds</p>" +
 						"<p>Incorrect</p>");
 					setTimeout(displayQuestion, 1000 * 5);
 					time = 15;
 				}
 				questionNumber++;
 			});
-			if (time === 0){
-				console.log("time out");
-				// clearInterval(setIntervalId);
-				// $(".html").html("Out of Time!");
-				// setTimeout(displayQuestion, 1000 * 5);
-				// time = 15;
-			}
+			// if (time === 0){
+			// 	console.log("time out");
+			// 	unanswered++;
+			// 	// clearInterval(setIntervalId);
+			// 	// $(".html").html("Out of Time!");
+			// 	// setTimeout(displayQuestion, 1000 * 5);
+			// 	// time = 15;
+			// }
 		};
 		// function resultBetweenQuestion(){
 		// }
