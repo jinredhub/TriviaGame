@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>New Webpage</title>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+        <link rel="stylesheet" type="text.css" href="assets/css/style.css">
+    </head>
+    <body>
+    	<div>
+    		<h1>Trivia Game</h1>
+    	<div class="html">
+    		<button class="startBtn">Start</button>
+    		<div class="counter"></div>
+    		<div clss="question"></div>
+    		<div class="answers"></div>
+    	</div>
+		</div>
+
+	<script>
+		var trivia = {
+			questions: ["aaaaaa", "bbbbbb"],
+			answer1: ["jin", "micheal", "red", "mond"],
+			answer2: ["Hi", "hellow", "morning", "good night"],
+			answerIndex: ["1", "2"],
+		};
+
+		var time = 10;
+		var html;
+		var userAnswer;
+		var setIntervalId;
+		var correct = 0;
+		var incorrect = 0;
+		var unanswered = trivia.questions.length;
+		var questionNumber = 0;
+		
+		$(".startBtn").on("click", function(){
+			displayQuestion();
+			startTimer();
+		});
+		function startTimer(){
+			setIntervalId = setInterval(timer, 1000);
+		}
+		function timer(){
+			time--;
+			$("#displayTime").html(time);
+			// if (time === 0){
+			// 	displayQuestion();
+			// 	time = 10;
+			// }
+		};
+		function displayQuestion(){
+			console.log("game started");
+			$(".html").html(
+				"<p>Time Remaining: " + "<span id='displayTime'></span>" + " Seconds</p>" +
+				"<p>" + trivia.questions[0] + "</p>" +
+				"<button class='btn' value=1>" + trivia.answer1[0] + "</button>" +
+				"<button class='btn' value=2>" + trivia.answer1[1] + "</button>" +
+				"<button class='btn' value=3>" + trivia.answer1[2] + "</button>" +
+				"<button class='btn' value=4>" + trivia.answer1[3] + "</button>");
+			$(".btn").on("click", function(){
+				console.log("button pressed");
+				if (this.value === "1"){
+					console.log("correct!");
+					correct++;
+					unanswered--;
+					// clearInterval(setIntervalId);
+					$(".html").html(
+						"<p>Correct!</p>");
+					setTimeout(displayQuestion, 1000 * 5);
+					time = 15;
+				}
+				else{
+					console.log("not correct");
+					incorrect++;
+					unanswered--;
+					// clearInterval(setIntervalId);
+					$(".html").html(
+						"<p>Incorrect</p>");
+					setTimeout(displayQuestion, 1000 * 5);
+					time = 15;
+				}
+				questionNumber++;
+			});
+			if (time === 0){
+				console.log("time out");
+				// clearInterval(setIntervalId);
+				// $(".html").html("Out of Time!");
+				// setTimeout(displayQuestion, 1000 * 5);
+				// time = 15;
+			}
+		};
+		// function resultBetweenQuestion(){
+		// }
+
+		// function result(){
+		// 	$(".html").html();
+		// }
+		
+	if(time === 0){
+		console.log("wait");
+	}
+
+	</script>
+<!-- time remaining: 30 Seconds
+What was the first full length CGI movie?
+
+-Buttons-
+A Bug's Life
+Monsters Inc.
+Toy Story
+The Lion King
+
+press start button to start the game
+queestion will display and timer starts.
+When you press an answer, timer stops.
+if answer is correct
+if answer is wrong "Nope!"
+if didn't answer, "Out of Time!"
+and display following
+if answer is worng or didn't answer,
+The Correct Answer was: "   ". and an image.
+if answer is correct
+"Correct!". and an image.
+delay 5 secs to display next question.
+
+when you finish all questions.
+timer will stop.
+"All done, heres how you did!"
+Correct Answers: ""
+Incorrect Answers: ""
+Unanswered: ""
+button "Start Over?" if pressed reset the game.
+
+ -->
+    
+    </body>
+</html>
+
