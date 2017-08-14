@@ -10,25 +10,21 @@
     <body>
     	<div>
     		<h1>Trivia Game</h1>
-    	<div class="html">
-    		<button class="startBtn">Start</button>
-    		<div class="counter"></div>
-    		<div clss="question"></div>
-    		<div class="answers"></div>
-    	</div>
+	    	<div class="html">
+	    		<button class="startBtn">Start</button>
+	    	</div>
 		</div>
 
 	<script>
 		var trivia = {
-			questions: ["aaaaaa", "bbbbbb"],
-			answer1: ["jin", "micheal", "red", "mond"],
-			answer2: ["Hi", "hellow", "morning", "good night"],
+			questions: ["name", "color"],
+			answer0: ["jin","ken", "ryu", "mike"],
+			answer1: ["red", "yellow", "pink", "blue"],
 			answerIndex: ["1", "2"],
 		};
 
 		var time = 10;
 		var html;
-		var userAnswer;
 		var setIntervalId;
 		var correct = 0;
 		var incorrect = 0;
@@ -51,70 +47,90 @@
 				console.log("time out");
 				unanswered++;
 				// clearInterval(setIntervalId);
-				// $(".html").html("Out of Time!");
 				setTimeout(displayQuestion, 1000 * 5);
 				time = 15;
+				questionNumber++;
 			}
-			// if (time === 0){
-			// 	displayQuestion();
-			// 	time = 10;
-			// }
 		};
 		function displayQuestion(){
 			console.log("game started");
-			$(".html").html(
-				"<p>Time Remaining: " + "<span id='displayTime'></span>" + " Seconds</p>" +
-				"<p>" + trivia.questions[0] + "</p>" +
-				"<button class='btn' value=1>" + trivia.answer1[0] + "</button>" +
-				"<button class='btn' value=2>" + trivia.answer1[1] + "</button>" +
-				"<button class='btn' value=3>" + trivia.answer1[2] + "</button>" +
-				"<button class='btn' value=4>" + trivia.answer1[3] + "</button>");
+			if (questionNumber === 0){
+				$(".html").html(
+					"<p>Time Remaining: " + "<span id='displayTime'></span>" + " Seconds</p>" +
+					"<p>" + trivia.questions[questionNumber] + "</p>" +
+					"<button class='btn' value=0>" + trivia.answer0[0] + "</button>" +
+					"<button class='btn' value=1>" + trivia.answer0[1] + "</button>" +
+					"<button class='btn' value=2>" + trivia.answer0[2] + "</button>" +
+					"<button class='btn' value=3>" + trivia.answer0[3] + "</button>");
+			}
+			if (questionNumber === 1){
+				$(".html").html(
+					"<p>Time Remaining: " + "<span id='displayTime'></span>" + " Seconds</p>" +
+					"<p>" + trivia.questions[questionNumber] + "</p>" +
+					"<button class='btn' value=0>" + trivia.answer1[0] + "</button>" +
+					"<button class='btn' value=1>" + trivia.answer1[1] + "</button>" +
+					"<button class='btn' value=2>" + trivia.answer1[2] + "</button>" +
+					"<button class='btn' value=3>" + trivia.answer1[3] + "</button>");
+			}
+			answeringQuestion();
+		};
+
+		function answeringQuestion(){
 			$(".btn").on("click", function(){
 				console.log("button pressed");
-				if (this.value === "1"){
+				var userAnswer = $(this).attr("value");
+				// userAnswer = parseInt(userAnswer);
+				if (userAnswer === trivia.answerIndex[questionNumber]){
 					console.log("correct!");
 					correct++;
-					// unanswered--;
-					
 					$(".html").html(
 						"<p>Time Remaining: " + "<span>" + time + "</span>" + " Seconds</p>" +
 						"<p>Correct!</p>");
-					// clearInterval(setIntervalId);
 					setTimeout(displayQuestion, 1000 * 5);
 					time = 15;
 				}
 				else{
 					console.log("not correct");
 					incorrect++;
-					// unanswered--;
-					// clearInterval(setIntervalId);
 					$(".html").html(
 						"<p>Time Remaining: " + "<span>" + time + "</span>" + " Seconds</p>" +
 						"<p>Incorrect</p>");
 					setTimeout(displayQuestion, 1000 * 5);
 					time = 15;
 				}
+
 				questionNumber++;
 			});
-			// if (time === 0){
-			// 	console.log("time out");
-			// 	unanswered++;
-			// 	// clearInterval(setIntervalId);
-			// 	// $(".html").html("Out of Time!");
-			// 	// setTimeout(displayQuestion, 1000 * 5);
-			// 	// time = 15;
-			// }
-		};
-		// function resultBetweenQuestion(){
-		// }
 
-		// function result(){
-		// 	$(".html").html();
-		// }
+			if (questionNumber === trivia.questions.length){
+					console.log("no more questions");
+					clearInterval(setIntervalId);
+					result();
+				}
+		}
+		function result(){
+			console.log("here is result");
+			$(".html").html(
+				"<p>All done, heres how you did!</p>" + 
+				"<p>Correct Answers: " + correct + "</p>" +
+				"<p>Incorrect Answers: " + incorrect + "</p>" +
+				"<p>Unanswered: " + unanswered + "</p>" +
+				"<button id='restartBtn'>Start Over?</button>");
+			$("#restartBtn").on("click", function(){
+				initilizeGame();
+				displayQuestion();
+				startTimer();
+			});
+		}
+
+		function initilizeGame(){
+			time = 10;
+			correct = 0;
+			incorrect = 0;
+			unanswered = 0;
+			questionNumber = 0;
+		}
 		
-	if(time === 0){
-		console.log("wait");
-	}
 
 	</script>
 <!-- time remaining: 30 Seconds
