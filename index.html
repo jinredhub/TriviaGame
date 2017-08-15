@@ -5,24 +5,29 @@
         <title>New Webpage</title>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
-        <link rel="stylesheet" type="text.css" href="assets/css/style.css">
+        <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     </head>
     <body>
-    	<div>
+    	<div id="bg">
+    	<br>
+    	<div id="newspaper">
     		<h1>Trivia Game</h1>
 	    	<div class="html">
 	    		<button class="startBtn">Start</button>
 	    	</div>
 		</div>
+		</div>
 
 	<script>
 		var trivia = {
 			questions: ["name", "color"],
-			answer0: ["jin","ken", "ryu", "mike"],
-			answer1: ["red", "yellow", "pink", "blue"],
+			answers: [
+					["jin","ken", "ryu", "mike"],
+					["red", "yellow", "pink", "blue"]
+					],
 			answerIndex: ["1", "2"],
 		};
-
+		console.log(trivia.answers[0][0]);
 		var time = 10;
 		var html;
 		var setIntervalId;
@@ -54,23 +59,14 @@
 		};
 		function displayQuestion(){
 			console.log("game started");
-			if (questionNumber === 0){
-				$(".html").html(
-					"<p>Time Remaining: " + "<span id='displayTime'></span>" + " Seconds</p>" +
-					"<p>" + trivia.questions[questionNumber] + "</p>" +
-					"<button class='btn' value=0>" + trivia.answer0[0] + "</button>" +
-					"<button class='btn' value=1>" + trivia.answer0[1] + "</button>" +
-					"<button class='btn' value=2>" + trivia.answer0[2] + "</button>" +
-					"<button class='btn' value=3>" + trivia.answer0[3] + "</button>");
-			}
-			if (questionNumber === 1){
-				$(".html").html(
-					"<p>Time Remaining: " + "<span id='displayTime'></span>" + " Seconds</p>" +
-					"<p>" + trivia.questions[questionNumber] + "</p>" +
-					"<button class='btn' value=0>" + trivia.answer1[0] + "</button>" +
-					"<button class='btn' value=1>" + trivia.answer1[1] + "</button>" +
-					"<button class='btn' value=2>" + trivia.answer1[2] + "</button>" +
-					"<button class='btn' value=3>" + trivia.answer1[3] + "</button>");
+			$(".html").html(
+				"<p>Time Remaining: " + "<span id='displayTime'></span>" + " Seconds</p>");		
+			for (var i=0; i<4; i++){
+			var newDiv = $("<button>");
+			newDiv.attr("data-value", i);
+			newDiv.addClass("btn");
+			newDiv.html(trivia.answers[questionNumber][i]);
+			$(".html").append(newDiv);
 			}
 			answeringQuestion();
 		};
@@ -78,7 +74,7 @@
 		function answeringQuestion(){
 			$(".btn").on("click", function(){
 				console.log("button pressed");
-				var userAnswer = $(this).attr("value");
+				var userAnswer = $(this).attr("data-value");
 				// userAnswer = parseInt(userAnswer);
 				if (userAnswer === trivia.answerIndex[questionNumber]){
 					console.log("correct!");
@@ -102,7 +98,7 @@
 				questionNumber++;
 			});
 
-			if (questionNumber === trivia.questions.length){
+			if (questionNumber === trivia.questions.length -1){
 					console.log("no more questions");
 					clearInterval(setIntervalId);
 					result();
@@ -117,13 +113,13 @@
 				"<p>Unanswered: " + unanswered + "</p>" +
 				"<button id='restartBtn'>Start Over?</button>");
 			$("#restartBtn").on("click", function(){
-				initilizeGame();
+				initializeGame();
 				displayQuestion();
 				startTimer();
 			});
 		}
 
-		function initilizeGame(){
+		function initializeGame(){
 			time = 10;
 			correct = 0;
 			incorrect = 0;
@@ -133,37 +129,6 @@
 		
 
 	</script>
-<!-- time remaining: 30 Seconds
-What was the first full length CGI movie?
-
--Buttons-
-A Bug's Life
-Monsters Inc.
-Toy Story
-The Lion King
-
-press start button to start the game
-queestion will display and timer starts.
-When you press an answer, timer stops.
-if answer is correct
-if answer is wrong "Nope!"
-if didn't answer, "Out of Time!"
-and display following
-if answer is worng or didn't answer,
-The Correct Answer was: "   ". and an image.
-if answer is correct
-"Correct!". and an image.
-delay 5 secs to display next question.
-
-when you finish all questions.
-timer will stop.
-"All done, heres how you did!"
-Correct Answers: ""
-Incorrect Answers: ""
-Unanswered: ""
-button "Start Over?" if pressed reset the game.
-
- -->
     
     </body>
 </html>
