@@ -4,19 +4,30 @@
         <meta charset="utf-8">
         <title>New Webpage</title>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     </head>
     <body>
-    	<div id="bg">
+    	<div id="bgBlack">
     	<br>
-    	<div id="newspaper">
-    		<h1>Trivia Game</h1>
-	    	<div class="html">
-	    		<button class="startBtn">Start</button>
-	    	</div>
+	    	<div id="streetImg">
+		    	<div id="car">
+		    	<br>
+			    	<div id="newspaper">
+			    	<br>
+			    		<h1 id="title">Trivia Game</h1>
+				    	<div class="html">
+				    		<button class="startBtn btn btn-primary btn-lg">Start</button>
+				    	</div>
+					</div>
+				</div>
+			</div>
 		</div>
-		</div>
+
+		<!-- <audio id="carStart">
+			<src="assets/sounds/StartCar.mp3" type="audio/mpeg">
+		</audio> -->
 
 	<script>
 		var trivia = {
@@ -35,8 +46,11 @@
 		var incorrect = 0;
 		var unanswered = 0;
 		var questionNumber = 0;
+		var displayResult = false;
 		
 		$(".startBtn").on("click", function(){
+			// audioStartCar();
+			startAnimation();
 			displayQuestion();
 			startTimer();
 		});
@@ -59,12 +73,18 @@
 		};
 		function displayQuestion(){
 			console.log("game started");
+			if (questionNumber === trivia.questions.length){
+					console.log("no more questions");
+					clearInterval(setIntervalId);
+					result();
+					return;
+				}
 			$(".html").html(
 				"<p>Time Remaining: " + "<span id='displayTime'></span>" + " Seconds</p>");		
 			for (var i=0; i<4; i++){
 			var newDiv = $("<button>");
 			newDiv.attr("data-value", i);
-			newDiv.addClass("btn");
+			newDiv.addClass("btn btn-primary");
 			newDiv.html(trivia.answers[questionNumber][i]);
 			$(".html").append(newDiv);
 			}
@@ -97,25 +117,22 @@
 
 				questionNumber++;
 			});
-
-			if (questionNumber === trivia.questions.length -1){
-					console.log("no more questions");
-					clearInterval(setIntervalId);
-					result();
-				}
 		}
+
 		function result(){
 			console.log("here is result");
+			displayResult = true;
 			$(".html").html(
 				"<p>All done, heres how you did!</p>" + 
 				"<p>Correct Answers: " + correct + "</p>" +
 				"<p>Incorrect Answers: " + incorrect + "</p>" +
 				"<p>Unanswered: " + unanswered + "</p>" +
-				"<button id='restartBtn'>Start Over?</button>");
+				"<button id='restartBtn' class='btn btn-primary'>Start Over?</button>");
 			$("#restartBtn").on("click", function(){
 				initializeGame();
 				displayQuestion();
 				startTimer();
+				startAnimation();
 			});
 		}
 
@@ -125,8 +142,32 @@
 			incorrect = 0;
 			unanswered = 0;
 			questionNumber = 0;
+			displayResult = false;
 		}
 		
+
+		function startAnimation(){
+			// if (questionNumber === trivia.questions.length){
+			// 	return;
+			// }
+			if (displayResult === true){
+				return;
+			}
+			$("#streetImg").animate({
+				backgroundPositionY: '+=200px'
+			}, 500, 'linear', startAnimation);
+		}
+
+		function stopAnimation(){
+			return;
+		}
+
+		// var audioStartCar = document.createElement("audio");
+		// audioStartCar.setAttribute("src", "Assets/sounds/StartCar.mp3");
+
+		// function playCarStartAudio(){
+		// 	audioStartCar.play();
+		// }
 
 	</script>
     
