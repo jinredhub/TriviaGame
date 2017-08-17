@@ -25,9 +25,17 @@
 			</div>
 		</div>
 
-		<!-- <audio id="carStart">
-			<src="assets/sounds/StartCar.mp3" type="audio/mpeg">
-		</audio> -->
+		<audio id="carStart">
+			<source src="assets/sounds/carIdle2.mp3" type="audio/mpeg">
+		</audio>
+
+		<audio id="carCrash">
+			<source src="assets/sounds/carCrash.mp3" type="audio/mpeg">
+		</audio>
+
+		<audio id="carEngineStart">
+			<source src="assets/sounds/carstartgarage.mp3" type="audio/mpeg">
+		</audio>
 
 	<script>
 		var trivia = {
@@ -46,10 +54,12 @@
 		var incorrect = 0;
 		var unanswered = 0;
 		var questionNumber = 0;
-		var displayResult = false;
+		var carIsRunning = false;
 		
 		$(".startBtn").on("click", function(){
-			// audioStartCar();
+				// audioStartCar();
+			playCarStartAudio();
+			playAudio();
 			startAnimation();
 			displayQuestion();
 			startTimer();
@@ -80,13 +90,15 @@
 					return;
 				}
 			$(".html").html(
-				"<p>Time Remaining: " + "<span id='displayTime'></span>" + " Seconds</p>");		
+				"<p>Time Remaining: " + "<span id='displayTime'></span>" + " Seconds</p>" + 
+				"<p>" + trivia.questions[questionNumber] + "</p>");		
 			for (var i=0; i<4; i++){
 			var newDiv = $("<button>");
 			newDiv.attr("data-value", i);
 			newDiv.addClass("btn btn-primary");
 			newDiv.html(trivia.answers[questionNumber][i]);
 			$(".html").append(newDiv);
+			$(".html").append("<br>");
 			}
 			answeringQuestion();
 		};
@@ -95,7 +107,6 @@
 			$(".btn").on("click", function(){
 				console.log("button pressed");
 				var userAnswer = $(this).attr("data-value");
-				// userAnswer = parseInt(userAnswer);
 				if (userAnswer === trivia.answerIndex[questionNumber]){
 					console.log("correct!");
 					correct++;
@@ -121,7 +132,9 @@
 
 		function result(){
 			console.log("here is result");
-			displayResult = true;
+			playCrashAudio();
+			audioCarIdle.pause();
+			carIsRunning = true;
 			$(".html").html(
 				"<p>All done, heres how you did!</p>" + 
 				"<p>Correct Answers: " + correct + "</p>" +
@@ -133,6 +146,8 @@
 				displayQuestion();
 				startTimer();
 				startAnimation();
+				playCarStartAudio();
+				audioCarIdle.play();
 			});
 		}
 
@@ -142,15 +157,12 @@
 			incorrect = 0;
 			unanswered = 0;
 			questionNumber = 0;
-			displayResult = false;
+			carIsRunning = false;
 		}
 		
 
 		function startAnimation(){
-			// if (questionNumber === trivia.questions.length){
-			// 	return;
-			// }
-			if (displayResult === true){
+			if (carIsRunning === true){
 				return;
 			}
 			$("#streetImg").animate({
@@ -162,12 +174,23 @@
 			return;
 		}
 
-		// var audioStartCar = document.createElement("audio");
-		// audioStartCar.setAttribute("src", "Assets/sounds/StartCar.mp3");
+		var audioCarIdle = document.getElementById("carStart");
+		function playAudio(){
+			console.log("car idle sound played");
+			audioCarIdle.loop = true;
+			audioCarIdle.play();
+		}
 
-		// function playCarStartAudio(){
-		// 	audioStartCar.play();
-		// }
+		var audioCarCrash = document.getElementById("carCrash");
+		function playCrashAudio(){
+			audioCarCrash.play();
+		}
+		
+		var audioCarStart = document.getElementById("carEngineStart");
+		function playCarStartAudio(){
+			console.log("car start sound played");
+			audioCarStart.play();
+		}
 
 	</script>
     
