@@ -17,7 +17,12 @@
 	background-image: url('../images/car.png');
 	width: 1200px;
 	height: 600px;
-
+}
+#glassImg{
+	background-image: url('../images/brokenGlass.png');
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 0 0;
 }
 #newspaper{
 	width: 558px;

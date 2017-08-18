@@ -33,7 +33,6 @@ var questionNumber = 0;
 var carIsRunning = false;
 
 $(".startBtn").on("click", function(){
-		// audioStartCar();
 	playCarStartAudio();
 	playAudio();
 	startAnimation();
@@ -117,6 +116,7 @@ function result(){
 	playCrashAudio();
 	audioCarIdle.pause();
 	carIsRunning = true;
+	$("#glassImg").css("background-size", "1000px 732px");
 	$(".html").html(
 		"<p>All done, heres how you did!</p>" + 
 		"<p>Correct Answers: " + correct + "</p>" +
@@ -124,6 +124,7 @@ function result(){
 		"<p>Unanswered: " + unanswered + "</p><br>" + 
 		"<button id='restartBtn' class='btn btn-primary'>Start Over?</button>");
 	$("#restartBtn").on("click", function(){
+		$("#glassImg").css("background-size", "0 0");
 		initializeGame();
 		displayQuestion();
 		startTimer();
