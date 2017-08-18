@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>New Webpage</title>
+        <title>My Trivia Game</title>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
          <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
@@ -18,6 +18,7 @@
 			    	<br>
 			    		<h1 id="title">Trivia Game</h1>
 				    	<div class="html">
+				    	<br>
 				    		<button class="startBtn btn btn-primary btn-lg">Start</button>
 				    	</div>
 					</div>
@@ -36,163 +37,8 @@
 		<audio id="carEngineStart">
 			<source src="assets/sounds/carstartgarage.mp3" type="audio/mpeg">
 		</audio>
-
-	<script>
-		var trivia = {
-			questions: ["name", "color"],
-			answers: [
-					["jin","ken", "ryu", "mike"],
-					["red", "yellow", "pink", "blue"]
-					],
-			answerIndex: ["1", "2"],
-		};
-		console.log(trivia.answers[0][0]);
-		var time = 10;
-		var html;
-		var setIntervalId;
-		var correct = 0;
-		var incorrect = 0;
-		var unanswered = 0;
-		var questionNumber = 0;
-		var carIsRunning = false;
-		
-		$(".startBtn").on("click", function(){
-				// audioStartCar();
-			playCarStartAudio();
-			playAudio();
-			startAnimation();
-			displayQuestion();
-			startTimer();
-		});
-		function startTimer(){
-			setIntervalId = setInterval(timer, 1000);
-		}
-		function timer(){
-			time--;
-			$("#displayTime").html(time);
-			if (time === 0){
-				$(".html").html(
-				"<p>Time Remaining: " + "<span>" + time + "</span>" + " Seconds</p>" + "<p>Out of Time!</p>");
-				console.log("time out");
-				unanswered++;
-				// clearInterval(setIntervalId);
-				setTimeout(displayQuestion, 1000 * 5);
-				time = 15;
-				questionNumber++;
-			}
-		};
-		function displayQuestion(){
-			console.log("game started");
-			if (questionNumber === trivia.questions.length){
-					console.log("no more questions");
-					clearInterval(setIntervalId);
-					result();
-					return;
-				}
-			$(".html").html(
-				"<p>Time Remaining: " + "<span id='displayTime'></span>" + " Seconds</p>" + 
-				"<p>" + trivia.questions[questionNumber] + "</p>");		
-			for (var i=0; i<4; i++){
-			var newDiv = $("<button>");
-			newDiv.attr("data-value", i);
-			newDiv.addClass("btn btn-primary");
-			newDiv.html(trivia.answers[questionNumber][i]);
-			$(".html").append(newDiv);
-			$(".html").append("<br>");
-			}
-			answeringQuestion();
-		};
-
-		function answeringQuestion(){
-			$(".btn").on("click", function(){
-				console.log("button pressed");
-				var userAnswer = $(this).attr("data-value");
-				if (userAnswer === trivia.answerIndex[questionNumber]){
-					console.log("correct!");
-					correct++;
-					$(".html").html(
-						"<p>Time Remaining: " + "<span>" + time + "</span>" + " Seconds</p>" +
-						"<p>Correct!</p>");
-					setTimeout(displayQuestion, 1000 * 5);
-					time = 15;
-				}
-				else{
-					console.log("not correct");
-					incorrect++;
-					$(".html").html(
-						"<p>Time Remaining: " + "<span>" + time + "</span>" + " Seconds</p>" +
-						"<p>Incorrect</p>");
-					setTimeout(displayQuestion, 1000 * 5);
-					time = 15;
-				}
-
-				questionNumber++;
-			});
-		}
-
-		function result(){
-			console.log("here is result");
-			playCrashAudio();
-			audioCarIdle.pause();
-			carIsRunning = true;
-			$(".html").html(
-				"<p>All done, heres how you did!</p>" + 
-				"<p>Correct Answers: " + correct + "</p>" +
-				"<p>Incorrect Answers: " + incorrect + "</p>" +
-				"<p>Unanswered: " + unanswered + "</p>" +
-				"<button id='restartBtn' class='btn btn-primary'>Start Over?</button>");
-			$("#restartBtn").on("click", function(){
-				initializeGame();
-				displayQuestion();
-				startTimer();
-				startAnimation();
-				playCarStartAudio();
-				audioCarIdle.play();
-			});
-		}
-
-		function initializeGame(){
-			time = 10;
-			correct = 0;
-			incorrect = 0;
-			unanswered = 0;
-			questionNumber = 0;
-			carIsRunning = false;
-		}
-		
-
-		function startAnimation(){
-			if (carIsRunning === true){
-				return;
-			}
-			$("#streetImg").animate({
-				backgroundPositionY: '+=200px'
-			}, 500, 'linear', startAnimation);
-		}
-
-		function stopAnimation(){
-			return;
-		}
-
-		var audioCarIdle = document.getElementById("carStart");
-		function playAudio(){
-			console.log("car idle sound played");
-			audioCarIdle.loop = true;
-			audioCarIdle.play();
-		}
-
-		var audioCarCrash = document.getElementById("carCrash");
-		function playCrashAudio(){
-			audioCarCrash.play();
-		}
-		
-		var audioCarStart = document.getElementById("carEngineStart");
-		function playCarStartAudio(){
-			console.log("car start sound played");
-			audioCarStart.play();
-		}
-
-	</script>
+	
+	<script type="text/javascript" src="assets/javascript/app.js"></script>
     
     </body>
 </html>
