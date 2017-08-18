@@ -113,10 +113,11 @@ function answeringQuestion(){
 
 function result(){
 	console.log("here is result");
+	setTimeout(delayDisplayGlassImg, 1000 * 1);
 	playCrashAudio();
 	audioCarIdle.pause();
 	carIsRunning = true;
-	$("#glassImg").css("background-size", "1000px 732px");
+	// $("#glassImg").css("background-size", "1000px 732px");
 	$(".html").html(
 		"<p>All done, heres how you did!</p>" + 
 		"<p>Correct Answers: " + correct + "</p>" +
@@ -174,4 +175,6 @@ function playCarStartAudio(){
 	console.log("car start sound played");
 	audioCarStart.play();
 }
-
+function delayDisplayGlassImg(){
+	$("#glassImg").css("background-size", "1000px 732px");
+}
