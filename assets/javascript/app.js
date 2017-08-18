@@ -23,7 +23,7 @@ var trivia = {
 };
 
 console.log(trivia.answers[0][0]);
-var time = 10;
+var time = 20;
 var html;
 var setIntervalId;
 var correct = 0;
@@ -55,7 +55,7 @@ function timer(){
 		unanswered++;
 		// clearInterval(setIntervalId);
 		setTimeout(displayQuestion, 1000 * 5);
-		time = 15;
+		time = 25;
 		questionNumber++;
 	}
 };
@@ -80,8 +80,6 @@ function displayQuestion(){
 	newDiv.append(newBtn);
 	newDiv.append("<br>");
 	$(".html").append(newDiv);
-	// $(".html").append(newBtn);
-	// $(".html").append("<br>");
 	}
 	answeringQuestion();
 };
@@ -108,7 +106,7 @@ function answeringQuestion(){
 		$(".html").append("<img src='" + trivia.answerImages[questionNumber] + "' width='150px'>");
 		console.log(trivia.answerImages);
 		setTimeout(displayQuestion, 1000 * 5);
-			time = 15;
+			time = 25;
 
 		questionNumber++;
 	});
@@ -136,7 +134,7 @@ function result(){
 }
 
 function initializeGame(){
-	time = 10;
+	time = 20;
 	correct = 0;
 	incorrect = 0;
 	unanswered = 0;
