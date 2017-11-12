@@ -1,4 +1,5 @@
 
+// trivia questions and answers array
 var trivia = {
 	questions: ["Q: Solar power generates electricity from what source?", 
 				"Q: When did Pac-Man arrive?",
@@ -22,7 +23,7 @@ var trivia = {
 					],
 };
 
-console.log(trivia.answers[0][0]);
+// console.log(trivia.answers[0][0]);
 var time = 20;
 var html;
 var setIntervalId;
@@ -50,7 +51,7 @@ function timer(){
 		"<p>Time Remaining: " + "<span>" + time + "</span>" + " Seconds</p>" + "<p>Out of Time!</p>");
 		$(".html").append("<p><span id='displayAnswer'>Correct Answer was: </span>" + trivia.correctAnswer[questionNumber] + "</p>");
 		$(".html").append("<img src='" + trivia.answerImages[questionNumber] + "' width='150px'>");
-		console.log("time out");
+		// console.log("time out");
 		unanswered++;
 		// clearInterval(setIntervalId);
 		setTimeout(displayQuestion, 1000 * 5);
@@ -58,10 +59,11 @@ function timer(){
 		questionNumber++;
 	}
 };
+// function to display a question 
 function displayQuestion(){
-	console.log("game started");
+	// console.log("game started");
 	if (questionNumber === trivia.questions.length){
-			console.log("no more questions");
+			// console.log("no more questions");
 			clearInterval(setIntervalId);
 			result();
 			return;
@@ -83,19 +85,20 @@ function displayQuestion(){
 	answeringQuestion();
 };
 
+// user answer question and update score. Then display next question
 function answeringQuestion(){
 	$(".btn").on("click", function(){
-		console.log("button pressed");
+		// console.log("button pressed");
 		var userAnswer = $(this).attr("data-value");
 		if (userAnswer === trivia.answerIndex[questionNumber]){
-			console.log("correct!");
+			// console.log("correct!");
 			correct++;
 			$(".html").html(
 				"<p>Time Remaining: " + "<span>" + time + "</span>" + " Seconds</p>" +
 				"<p>Correct!</p>");
 		}
 		else{
-			console.log("not correct");
+			// console.log("not correct");
 			incorrect++;
 			$(".html").html(
 				"<p>Time Remaining: " + "<span>" + time + "</span>" + " Seconds</p>" +
@@ -103,7 +106,7 @@ function answeringQuestion(){
 			$(".html").append("<p><span id='displayAnswer'>Correct Answer was: </span>" + trivia.correctAnswer[questionNumber] + "</p>");
 		}
 		$(".html").append("<img src='" + trivia.answerImages[questionNumber] + "' width='150px'>");
-		console.log(trivia.answerImages);
+		// console.log(trivia.answerImages);
 		setTimeout(displayQuestion, 1000 * 5);
 			time = 25;
 
@@ -111,8 +114,9 @@ function answeringQuestion(){
 	});
 }
 
+// display the score. Change bg img. Play audio. Display button to restart game.
 function result(){
-	console.log("here is result");
+	// console.log("here is result");
 	setTimeout(delayDisplayGlassImg, 1000 * 1);
 	playCrashAudio();
 	audioCarIdle.pause();
@@ -135,6 +139,7 @@ function result(){
 	});
 }
 
+// initial game stats
 function initializeGame(){
 	time = 20;
 	correct = 0;
@@ -144,7 +149,7 @@ function initializeGame(){
 	carIsRunning = false;
 }
 
-
+// function that animate road img
 function startAnimation(){
 	if (carIsRunning === true){
 		return;
@@ -160,7 +165,7 @@ function stopAnimation(){
 
 var audioCarIdle = document.getElementById("carStart");
 function playAudio(){
-	console.log("car idle sound played");
+	// console.log("car idle sound played");
 	audioCarIdle.loop = true;
 	audioCarIdle.play();
 }
@@ -172,7 +177,7 @@ function playCrashAudio(){
 
 var audioCarStart = document.getElementById("carEngineStart");
 function playCarStartAudio(){
-	console.log("car start sound played");
+	// console.log("car start sound played");
 	audioCarStart.play();
 }
 function delayDisplayGlassImg(){
